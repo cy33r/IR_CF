@@ -138,13 +138,20 @@ def main():
 
         if found_list:
             sorted_hits = sorted(found_list, key=lambda x: x['ping'])
-            with open("found_upstreams.txt", "w", encoding="utf-8") as f:
-                f.write(f"GITHUB.COM/CY33R | VIP3R & NIMA SCANNER\n")
-                for h in sorted_hits:
-                    f.write(f"{h['ip']:<18} | {h['ping']:>5}MS | {h['type']:<10} | {h['status'].upper()}\n")
+            print(Fore.GREEN + f"\n [✔] SCAN FINISHED. {len(found_list)} HITS FOUND.")
+            
+            # STEP 1: ASKING TO SAVE SCAN RESULTS
+            print(Fore.CYAN + " > DO YOU WANT TO SAVE SCAN RESULTS TO FILE? (Y/N)")
+            save_choice = sys.stdin.readline().strip().upper()
+            if save_choice == 'Y':
+                with open("found_upstreams.txt", "w", encoding="utf-8") as f:
+                    f.write(f"GITHUB.COM/CY33R | VIP3R & NIMA SCANNER\n")
+                    for h in sorted_hits:
+                        f.write(f"{h['ip']:<18} | {h['ping']:>5}MS | {h['type']:<10} | {h['status'].upper()}\n")
+                print(Fore.GREEN + " [✔] RESULTS SAVED IN 'found_upstreams.txt'")
 
-            print(Fore.GREEN + f"\n [✔] SCAN FINISHED. {len(found_list)} HITS.")
-            print(Fore.CYAN + " > DO YOU WANT TO GENERATE V2RAY CONFIGS? (Y/N)")
+            # STEP 2: GENERATING V2RAY CONFIGS
+            print(Fore.CYAN + "\n > DO YOU WANT TO GENERATE V2RAY CONFIGS? (Y/N)")
             if sys.stdin.readline().strip().upper() == 'Y':
                 print(Fore.YELLOW + " [!] PASTE YOUR SAMPLE CONFIG AND PRESS ENTER:")
                 user_template = sys.stdin.readline().strip()
